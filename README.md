@@ -27,14 +27,14 @@ A simple, good-looking to-do list built with plain HTML, CSS and JavaScript. No 
 ```
 .
 ├── index.html   # page structure
-├── style.css    # styling, themes and animations
-├── DOM2.js      # all the app logic
+├── style1.css    # styling, themes and animations
+├── DOM4.js      # all the app logic
 └── README.md
 ```
 
 ## How to run
 
-1. Put the three files (`index.html`, `style.css`, `DOM2.js`) in the same folder.
+1. Put the three files (`index.html`, `style1.css`, `DOM4.js`) in the same folder.
 2. Open `index.html` in any modern browser.
 
 That's it. An internet connection is only needed for the Google Fonts. Without it, the app falls back to system fonts.
@@ -50,10 +50,10 @@ That's it. An internet connection is only needed for the Google Fonts. Without i
 | What | Where |
 | --- | --- |
 | LinkedIn link on the byline | `index.html`, the `href` inside `.byline` |
-| Colors (light and dark) | `style.css`, the variables in `:root` and `[data-theme="dark"]` |
-| Mobile breakpoint | `style.css`, the `@media (max-width: 600px)` rule |
-| Confetti colors and amount | `DOM2.js`, the `confetti()` function |
-| Daily reset behavior | `DOM2.js`, the `resetIfNewDay()` function |
+| Colors (light and dark) | `style1.css`, the variables in `:root` and `[data-theme="dark"]` |
+| Mobile breakpoint | `style1.css`, the `@media (max-width: 600px)` rule |
+| Confetti colors and amount | `DOM4.js`, the `confetti()` function |
+| Daily reset behavior | `DOM4.js`, the `resetIfNewDay()` function |
 
 ## Limitations
 
