@@ -49,7 +49,7 @@ That's it. An internet connection is only needed for the Google Fonts. Without i
 
 | What | Where |
 | --- | --- |
-| LinkedIn link on the byline | `index.html`, the `href` inside `.byline` |
+| Portfolio link on the byline | `index.html`, the `href` inside `.byline` |
 | Colors (light and dark) | `style1.css`, the variables in `:root` and `[data-theme="dark"]` |
 | Mobile breakpoint | `style1.css`, the `@media (max-width: 600px)` rule |
 | Confetti colors and amount | `DOM4.js`, the `confetti()` function |
