@@ -1,0 +1,14 @@
+{
+  "name": "My Todo List",
+  "short_name": "Todo",
+  "description": "A simple daily to-do list with progress tracking, dark mode and automatic daily reset.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#cfe8ff",
+  "theme_color": "#3a5bff",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
