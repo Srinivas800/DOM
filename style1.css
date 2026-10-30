@@ -294,6 +294,14 @@ li.done .text {
     color: var(--muted);
 }
 
+.task-link {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+li.done .task-link { color: var(--muted); }
+
 /* ---------- Weekly stats ---------- */
 .stats { margin: 0; }
 
@@ -382,7 +390,7 @@ li.done .text {
     bottom: 10px;
     right: 14px;
     margin: 0;
-    font-size: 7px;
+    font-size: 6px;
     font-style: italic;
     color: var(--muted);
 }
@@ -411,7 +419,17 @@ li.done .text {
     gap: 16px;
 }
 
-/* wide screens: timer top-left, tasks in the middle, stats top-right */
+/* side columns: left = Focus timer, right = This week + My Bundle */
+.side-col {
+    width: min(520px, 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.side-col > .card { width: 100%; }
+
+/* wide screens: timer | tasks | stats + bundle */
 @media (min-width: 1180px) {
     .layout {
         display: grid;
@@ -423,16 +441,21 @@ li.done .text {
 
     .layout > .card { width: auto; }
 
-    .timer-card { grid-column: 1; grid-row: 1; }
-    .main-card  { grid-column: 2; grid-row: 1; }
-    .stats-card { grid-column: 3; grid-row: 1; }
+    .left-col  { grid-column: 1; grid-row: 1; }
+    .main-card { grid-column: 2; grid-row: 1; }
+    .right-col { grid-column: 3; grid-row: 1; }
 
-    /* the side cards stay put while the task list grows or is reordered */
-    .side {
+    /* the side columns stay put while the task list grows or is reordered */
+    .side-col {
+        width: auto;
         position: sticky;
-        top: 24px;
-        max-height: calc(100vh - 48px);
+        top: 4px;
+        max-height: calc(100vh - 8px);
         overflow-y: auto;
+        scrollbar-width: thin;
+        /* extra room so the card shadows aren't cut off by the scroll area */
+        padding: 20px 20px 50px;
+        margin: -20px -20px 0;
     }
 }
 

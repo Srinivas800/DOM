@@ -100,22 +100,40 @@
         } catch (e) { /* sound is optional */ }
     }
 
+    // plays the 3-beep alert again and again for ALARM_SECONDS
+    const ALARM_SECONDS = 5;
+
     function beep() {
         if (!audioCtx) return;
-        [0, 0.3, 0.6].forEach((delay, i) => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            const t = audioCtx.currentTime + delay;
-            osc.type = 'sine';
-            osc.frequency.value = i === 2 ? 880 : 660;
-            gain.gain.setValueAtTime(0.0001, t);
-            gain.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
-            gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start(t);
-            osc.stop(t + 0.25);
-        });
+
+        const play = () => {
+            const PATTERN = [0, 0.3, 0.6]; // when each beep starts inside one round (seconds)
+            const ROUND = 1.4;             // how long one round takes before it repeats
+
+            for (let round = 0; round + 0.85 <= ALARM_SECONDS + 0.1; round += ROUND) {
+                PATTERN.forEach((offset, i) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const t = audioCtx.currentTime + round + offset;
+                    osc.type = 'sine';
+                    osc.frequency.value = i === 2 ? 880 : 660;
+                    gain.gain.setValueAtTime(0.0001, t);
+                    gain.gain.exponentialRampToValueAtTime(0.25, t + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(t);
+                    osc.stop(t + 0.25);
+                });
+            }
+        };
+
+        // phones can put the audio engine to sleep while a long timer runs: wake it first
+        if (audioCtx.state === 'suspended') {
+            audioCtx.resume().then(play, play);
+        } else {
+            play();
+        }
     }
 
     function notify(message) {

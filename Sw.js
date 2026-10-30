@@ -1,6 +1,6 @@
 // Change this number every time you update your code,
 // so phones download the new version instead of the old one.
-const VERSION = 'v5.1.9';
+const VERSION = 'v9.5';
 const CACHE = 'todo-' + VERSION;
 
 const FILES = [
@@ -9,6 +9,8 @@ const FILES = [
     './style1.css',
     './DOM4.js',
     './timer.js',
+    './bundle.js',
+    './bundle.css',
     './manifest.json',
     './icon-192.png',
     './icon-512.png'

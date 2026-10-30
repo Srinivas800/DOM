@@ -5,107 +5,166 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✅</text></svg>"> -->
-        <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="icon" type="image/png" href="icon-192.png">
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style1.css">
+    <link rel="stylesheet" href="bundle.css">
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#3a5bff">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
     <title>MY TODO LIST</title>
     <meta name="description" content="A simple daily to-do list with progress tracking, dark mode and automatic daily reset.">
 </head>
 <body>
     <div class="layout">
-    <main class="card main-card">
-        <header id="header">
-            <div>
-                <p id="greeting"></p>
-                <h1 id="heading">MY TODO LIST</h1>
+
+        <!-- middle: tasks -->
+        <main class="card main-card">
+            <header id="header">
+                <div>
+                    <p id="greeting"></p>
+                    <h1 id="heading">MY TODO LIST</h1>
+                </div>
+                <button id="theme" type="button">Dark mode</button>
+            </header>
+
+            <div class="meta">
+                <span id="today"></span>
+                <span id="streak" class="pill"></span>
             </div>
-            <button id="theme" type="button">Dark mode</button>
-        </header>
 
-        <div class="meta">
-            <span id="today"></span>
-            <span id="streak" class="pill"></span>
-        </div>
-
-        <div class="add-row">
-            <input type="text" id="input" placeholder="Enter a task" autocomplete="off">
-            <button id="add" type="button">Add Task</button>
-        </div>
-
-        <div class="progress">
-            <div class="progress-top">
-                <p id="count">0 of 0 done</p>
-                <p id="message"></p>
+            <div class="add-row">
+                <input type="text" id="input" placeholder="Enter a task" autocomplete="off">
+                <button id="add" type="button">Add Task</button>
             </div>
-            <div class="bar"><div id="fill"></div></div>
-        </div>
 
-        <div class="filters" role="group" aria-label="Filter tasks">
-            <button type="button" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" data-filter="active" aria-pressed="false">Active</button>
-            <button type="button" data-filter="completed" aria-pressed="false">Completed</button>
-        </div>
-
-        <ul class="task-list" id="tasklist"></ul>
-        <p id="empty"></p>
-
-
-    </main>
-        <aside class="card side timer-card">
-            <section class="timer" aria-label="Focus timer">
-                <div class="timer-head">
-                    <h2>Focus timer</h2>&nbsp;<p>(Pomodoro)</p>
-                    <p id="sessions"></p>
+            <div class="progress">
+                <div class="progress-top">
+                    <p id="count">0 of 0 done</p>
+                    <p id="message"></p>
                 </div>
+                <div class="bar"><div id="fill"></div></div>
+            </div>
 
-                <div class="modes" role="group" aria-label="Timer type">
-                    <button type="button" data-mode="focus" aria-pressed="true">Focus</button>
-                    <button type="button" data-mode="short" aria-pressed="false">Short break</button>
-                    <button type="button" data-mode="long" aria-pressed="false">Long break</button>
-                    <button type="button" data-mode="custom" aria-pressed="false">Custom</button>
-                </div>
+            <div class="filters" role="group" aria-label="Filter tasks">
+                <button type="button" data-filter="all" aria-pressed="true">All</button>
+                <button type="button" data-filter="active" aria-pressed="false">Active</button>
+                <button type="button" data-filter="completed" aria-pressed="false">Completed</button>
+            </div>
 
-                <div class="clock">
-                    <svg viewBox="0 0 120 120" aria-hidden="true">
-                        <circle class="ring-track" cx="60" cy="60" r="52"></circle>
-                        <circle id="ring" class="ring" cx="60" cy="60" r="52" transform="rotate(-90 60 60)"></circle>
-                    </svg>
-                    <p id="time">25:00</p>
-                </div>
+            <ul class="task-list" id="tasklist"></ul>
+            <p id="empty"></p>
+        </main>
 
-                <div class="timer-controls">
-                    <button id="t-start" type="button">Start</button>
-                    <button id="t-reset" type="button">Reset</button>
-                </div>
-                <p id="t-status" aria-live="polite"></p>
-
-                <details class="timer-settings">
-                    <summary>Set your own times (minutes)</summary>
-                    <div class="settings-grid">
-                        <label>Focus <input type="number" id="set-focus" min="1" max="180" inputmode="numeric"></label>
-                        <label>Short break <input type="number" id="set-short" min="1" max="180" inputmode="numeric"></label>
-                        <label>Long break <input type="number" id="set-long" min="1" max="180" inputmode="numeric"></label>
-                        <label>Custom <input type="number" id="set-custom" min="1" max="180" inputmode="numeric"></label>
+        <!-- left column: Focus timer -->
+        <div class="side-col left-col">
+            <aside class="card timer-card">
+                <section class="timer" aria-label="Focus timer">
+                    <div class="timer-head">
+                        <h2>Focus timer</h2>&nbsp;<p>(Pomodoro)</p>
+                        <p id="sessions"></p>
                     </div>
-                </details>
-            </section>
-        </aside>
-        <aside class="card side stats-card">
-            <section class="stats" aria-label="This week">
-                <div class="stats-head">
-                    <h2>This week</h2>
-                    <p id="week-total"></p>
-                </div>
-                <div class="week" id="week"></div>
-            </section>
-        </aside>
+
+                    <div class="modes" role="group" aria-label="Timer type">
+                        <button type="button" data-mode="focus" aria-pressed="true">Focus</button>
+                        <button type="button" data-mode="short" aria-pressed="false">Short break</button>
+                        <button type="button" data-mode="long" aria-pressed="false">Long break</button>
+                        <button type="button" data-mode="custom" aria-pressed="false">Custom</button>
+                    </div>
+
+                    <div class="clock">
+                        <svg viewBox="0 0 120 120" aria-hidden="true">
+                            <circle class="ring-track" cx="60" cy="60" r="52"></circle>
+                            <circle id="ring" class="ring" cx="60" cy="60" r="52" transform="rotate(-90 60 60)"></circle>
+                        </svg>
+                        <p id="time">25:00</p>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button id="t-start" type="button">Start</button>
+                        <button id="t-reset" type="button">Reset</button>
+                    </div>
+                    <p id="t-status" aria-live="polite"></p>
+
+                    <details class="timer-settings">
+                        <summary>Set your own times (minutes)</summary>
+                        <div class="settings-grid">
+                            <label>Focus <input type="number" id="set-focus" min="1" max="180" inputmode="numeric"></label>
+                            <label>Short break <input type="number" id="set-short" min="1" max="180" inputmode="numeric"></label>
+                            <label>Long break <input type="number" id="set-long" min="1" max="180" inputmode="numeric"></label>
+                            <label>Custom <input type="number" id="set-custom" min="1" max="180" inputmode="numeric"></label>
+                        </div>
+                    </details>
+                </section>
+            </aside>
+
+        </div>
+
+        <!-- right column: This week card on top, My Bundle card below it -->
+        <div class="side-col right-col">
+            <aside class="card stats-card">
+                <section class="stats" aria-label="This week">
+                    <div class="stats-head">
+                        <h2>This week</h2>
+                        <p id="week-total"></p>
+                    </div>
+                    <div class="week" id="week"></div>
+                </section>
+            </aside>
+
+            <aside class="card bundle-card">
+                <section class="bundle" aria-label="My bundle">
+                    <button type="button" id="bundle-toggle" class="bundle-toggle" aria-expanded="false" aria-controls="bundle-panel">
+                        <svg class="bundle-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M21 8l-9-5-9 5 9 5 9-5z"></path>
+                            <path d="M3 8v8l9 5 9-5V8"></path>
+                            <path d="M12 13v8"></path>
+                        </svg>
+                        <span class="bundle-title">My Bundle</span>
+                        <span id="bundle-count" class="bundle-count">0</span>
+                        <span class="chev" aria-hidden="true">▾</span>
+                    </button>
+
+                    <div id="bundle-panel" class="bundle-panel" hidden>
+                        <div class="b-tabs" role="group" aria-label="What to add">
+                            <button type="button" data-add="link" aria-pressed="true">Link</button>
+                            <button type="button" data-add="file" aria-pressed="false">File</button>
+                            <button type="button" data-add="note" aria-pressed="false">Note</button>
+                        </div>
+
+                        <form id="bundle-form" class="bundle-form">
+                            <input type="text" id="b-title" placeholder="Title (optional)" autocomplete="off">
+                            <div data-field="link">
+                                <input type="text" id="b-url" inputmode="url" placeholder="Paste a link, e.g. https://..." autocomplete="off">
+                            </div>
+                            <div data-field="file" hidden>
+                                <input type="file" id="b-file" multiple>
+                                <p class="b-hint">PDFs, images, documents... saved on this device only (up to 50 MB each).</p>
+                            </div>
+                            <div data-field="note" hidden>
+                                <textarea id="b-text" rows="3" placeholder="Write or paste anything important..."></textarea>
+                            </div>
+                            <button type="submit" id="b-add">Add to bundle</button>
+                            <p id="b-msg" aria-live="polite"></p>
+                        </form>
+
+                        <input type="search" id="b-search" placeholder="Search your bundle" autocomplete="off">
+                        <div class="b-tabs" role="group" aria-label="Show">
+                            <button type="button" data-bfilter="all" aria-pressed="true">All</button>
+                            <button type="button" data-bfilter="link" aria-pressed="false">Links</button>
+                            <button type="button" data-bfilter="file" aria-pressed="false">Files</button>
+                            <button type="button" data-bfilter="note" aria-pressed="false">Notes</button>
+                        </div>
+
+                        <ul class="b-list" id="b-list"></ul>
+                        <p id="b-empty"></p>
+                    </div>
+                </section>
+            </aside>
+        </div>
     </div>
 
     <div id="toast" role="status" aria-live="polite">
@@ -119,6 +178,7 @@
     <canvas id="confetti"></canvas>
     <script src="DOM4.js"></script>
     <script src="timer.js"></script>
+    <script src="bundle.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
