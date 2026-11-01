@@ -1,0 +1,180 @@
+/* ---------- Feedback button + pop-up form ---------- */
+.feedback-open {
+    position: fixed;
+    bottom: 10px;
+    left: 14px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--edge);
+    background: var(--row);
+    color: var(--ink);
+    font-size: 0.85rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.feedback-open:hover { background: var(--track); }
+
+.feedback-dialog {
+    width: min(440px, calc(100vw - 32px));
+    max-height: calc(100vh - 32px);
+    padding: 22px;
+    border-radius: 20px;
+    border: 1px solid var(--edge);
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    color: var(--ink);
+    font: inherit;
+    box-shadow: var(--shadow);
+    overflow-y: auto;
+}
+
+.feedback-dialog::backdrop {
+    background: rgba(10, 15, 40, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.fb-form { display: grid; gap: 14px; }
+.fb-form[hidden], .fb-thanks[hidden] { display: none; }
+
+.fb-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.fb-head h2 {
+    margin: 0;
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+}
+
+#fb-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--edge);
+    background: var(--row);
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+#fb-close:hover { background: var(--track); }
+
+/* spam trap: real people never see or fill this */
+.fb-trap {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.fb-rating { border: 0; margin: 0; padding: 0; min-width: 0; }
+
+.fb-rating legend {
+    padding: 0;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+.fb-faces { display: flex; gap: 6px; }
+
+.fb-faces label { position: relative; flex: 1; }
+
+.fb-faces input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.fb-faces .face {
+    display: grid;
+    place-items: center;
+    padding: 8px 0;
+    border-radius: 12px;
+    border: 1px solid var(--edge);
+    background: var(--row);
+    font-size: 1.5rem;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.fb-faces input:checked + .face {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: scale(1.08);
+}
+
+.fb-faces input:focus-visible + .face {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.fb-field { display: grid; gap: 4px; font-size: 0.85rem; color: var(--muted); }
+
+.fb-field input,
+.fb-field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--edge);
+    background: var(--row);
+    color: var(--ink);
+    font: inherit;
+    font-size: 0.95rem;
+}
+
+.fb-field textarea { resize: vertical; min-height: 96px; }
+.fb-field ::placeholder { color: var(--muted); }
+
+.fb-field input:focus-visible,
+.fb-field textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+#fb-send, #fb-done {
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    font-weight: 600;
+}
+
+#fb-send:disabled { opacity: 0.6; cursor: wait; }
+
+#fb-msg {
+    min-height: 1.2em;
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+#fb-msg.error { color: #d64545; }
+
+.fb-thanks {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 12px 0;
+    text-align: center;
+}
+
+.fb-thanks img { width: 72px; height: 72px; }
+
+.fb-thanks h2 {
+    margin: 0;
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+}
+
+.fb-thanks p { margin: 0; color: var(--muted); }
+
+@media (max-width: 600px) {
+    .feedback-open { position: static; }
+}

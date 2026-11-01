@@ -1,16 +1,20 @@
-// Change this number every time you update your code,
+// Change this value every time you update your code,
 // so phones download the new version instead of the old one.
-const VERSION = 'v9.5';
+const VERSION = 'v23';
 const CACHE = 'todo-' + VERSION;
 
 const FILES = [
     './',
     './index.html',
     './style1.css',
+    './bundle.css',
+    './celebrate.css',
+    './feedback.css',
     './DOM4.js',
     './timer.js',
     './bundle.js',
-    './bundle.css',
+    './celebrate.js',
+    './feedback.js',
     './manifest.json',
     './icon-192.png',
     './icon-512.png'
@@ -32,12 +36,23 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-// Serve from the phone first, fall back to the network
+// Network first: when you're online you always get the newest files.
+// The saved copy is only used when you're offline.
 self.addEventListener('fetch', (event) => {
     if (event.request.method !== 'GET') return;
     if (new URL(event.request.url).origin !== location.origin) return; // skip Google Fonts etc.
 
     event.respondWith(
-        caches.match(event.request).then((cached) => cached || fetch(event.request))
+        fetch(event.request)
+            .then((response) => {
+                if (response.ok) {
+                    const copy = response.clone();
+                    caches.open(CACHE).then((cache) => cache.put(event.request, copy));
+                }
+                return response;
+            })
+            .catch(() =>
+                caches.match(event.request).then((cached) => cached || caches.match('./index.html'))
+            )
     );
 });

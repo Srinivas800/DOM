@@ -1,0 +1,156 @@
+/* ---------- Celebration: shown for 5 seconds when every task is done ---------- */
+body.celebrating { overflow: hidden; }
+
+.celebrate {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    cursor: pointer;
+    color: #fff;
+    /* fully opaque, so nothing from the page shows through */
+    background: radial-gradient(circle at 50% 40%, #2a1646 0%, #0e1430 75%);
+    animation: cele-in 0.4s ease both;
+}
+
+.celebrate.leaving { animation: cele-out 0.5s ease forwards; }
+
+@keyframes cele-in  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cele-out { to { opacity: 0; } }
+
+.cele-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cele-center {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 14px;
+    padding: 24px;
+    text-align: center;
+}
+
+/* the tomato, its glow and the ripples all sit on top of each other */
+.cele-stage {
+    width: min(260px, 60vw);
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+}
+
+.cele-stage > * { grid-area: 1 / 1; }
+
+.cele-glow {
+    width: 150%;
+    height: 150%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 180, 84, 0.5), rgba(255, 93, 143, 0.18) 50%, transparent 70%);
+    animation: cele-pulse 1.6s ease-in-out infinite;
+}
+
+.cele-ring {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.7);
+    opacity: 0;
+    animation: cele-ripple 1.8s ease-out infinite;
+}
+
+.cele-ring.two { animation-delay: 0.9s; }
+
+.cele-tomato {
+    width: 78%;
+    height: auto;
+    filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.45));
+    animation:
+        cele-pop 0.9s cubic-bezier(0.2, 1.4, 0.4, 1) both,
+        cele-float 2.4s ease-in-out 0.9s infinite;
+}
+
+.cele-title {
+    margin: 0;
+    font-family: "Bricolage Grotesque", system-ui, sans-serif;
+    font-weight: 800;
+    font-size: clamp(2rem, 8vw, 3.6rem);
+    letter-spacing: -0.02em;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    animation: cele-rise 0.7s ease 0.5s both;
+}
+
+.cele-sub {
+    margin: 0;
+    max-width: 26ch;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.82);
+    animation: cele-rise 0.7s ease 0.8s both;
+}
+
+/* thin bar that empties over the 5 seconds */
+.cele-bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.cele-bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #ffb454, #ff5d8f);
+    transform-origin: left;
+    animation: cele-bar var(--dur, 5000ms) linear forwards;
+}
+
+.cele-skip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 18px;
+    margin: 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+@keyframes cele-pop {
+    0%   { transform: scale(0) rotate(-25deg); opacity: 0; }
+    60%  { transform: scale(1.18) rotate(6deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+@keyframes cele-float {
+    0%, 100% { transform: translateY(0) rotate(0); }
+    50%      { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes cele-pulse {
+    0%, 100% { transform: scale(0.9); opacity: 0.7; }
+    50%      { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes cele-ripple {
+    0%   { transform: scale(0.55); opacity: 0.8; }
+    100% { transform: scale(1.7); opacity: 0; }
+}
+
+@keyframes cele-rise {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes cele-bar { to { transform: scaleX(0); } }
+
+/* people who turned motion off get a calm, still version */
+@media (prefers-reduced-motion: reduce) {
+    .cele-glow, .cele-ring, .cele-tomato { animation: none !important; }
+    .cele-ring { display: none; }
+}

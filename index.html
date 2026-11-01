@@ -9,6 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style1.css">
     <link rel="stylesheet" href="bundle.css">
+    <link rel="stylesheet" href="celebrate.css">
+    <link rel="stylesheet" href="feedback.css">
 
     <!-- PWA -->
     <link rel="manifest" href="manifest.json">
@@ -167,10 +169,58 @@
         </div>
     </div>
 
+    <!-- Feedback pop-up (sent to you by Netlify Forms) -->
+    <dialog id="feedback-dialog" class="feedback-dialog" aria-labelledby="fb-title">
+        <form id="feedback-form" class="fb-form" name="feedback" method="POST" data-netlify="true" data-netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="feedback">
+            <p class="fb-trap"><label>Leave this empty: <input type="text" name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+            <div class="fb-head">
+                <h2 id="fb-title">Share your feedback</h2>
+                <button type="button" id="fb-close" aria-label="Close">✕</button>
+            </div>
+
+            <fieldset class="fb-rating">
+                <legend>How do you like the app?</legend>
+                <div class="fb-faces">
+                    <label><input type="radio" name="rating" value="1"><span class="face" title="Bad">😞</span></label>
+                    <label><input type="radio" name="rating" value="2"><span class="face" title="Poor">😕</span></label>
+                    <label><input type="radio" name="rating" value="3"><span class="face" title="Okay">😐</span></label>
+                    <label><input type="radio" name="rating" value="4"><span class="face" title="Good">🙂</span></label>
+                    <label><input type="radio" name="rating" value="5"><span class="face" title="Love it">😍</span></label>
+                </div>
+            </fieldset>
+
+            <label class="fb-field">Your message
+                <textarea name="message" rows="4" maxlength="1000" required placeholder="What do you like? What could be better?"></textarea>
+            </label>
+
+            <label class="fb-field">Your name (optional)
+                <input type="text" name="name" autocomplete="name">
+            </label>
+
+            <label class="fb-field">Email (optional, only if you want a reply)
+                <input type="email" name="email" autocomplete="email">
+            </label>
+
+            <button type="submit" id="fb-send">Send feedback</button>
+            <p id="fb-msg" role="status" aria-live="polite"></p>
+        </form>
+
+        <div id="fb-thanks" class="fb-thanks" hidden>
+            <img src="icon-192.png" alt="">
+            <h2>Thank you!</h2>
+            <p>Your feedback was sent.</p>
+            <button type="button" id="fb-done">Close</button>
+        </div>
+    </dialog>
+
     <div id="toast" role="status" aria-live="polite">
         <span id="toast-text"></span>
         <button id="undo" type="button">Undo</button>
     </div>
+
+    <button type="button" id="feedback-open" class="feedback-open">💬 Feedback</button>
 
     <p class="byline">
         by <a href="https://srinivassayinni.netlify.app/" target="_blank" rel="noopener noreferrer">Srinivas Sayinni</a>
@@ -179,6 +229,8 @@
     <script src="DOM4.js"></script>
     <script src="timer.js"></script>
     <script src="bundle.js"></script>
+    <script src="celebrate.js"></script>
+    <script src="feedback.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
